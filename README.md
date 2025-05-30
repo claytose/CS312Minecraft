@@ -74,6 +74,7 @@ Required Dependenices:
    - Type "us-east-1" for "Default region name".
    - Click "Enter" for "Default output format."
 8. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
+      - Need to replace each of the fields with your AWS information saved from Step 2.6.
    ```bash
    export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID HERE>
    export AWS_SECRET_ACCESS_KEY=<YOUR SECRET_ACCESS_KEY HERE>
@@ -88,10 +89,10 @@ Required Dependenices:
 On your local terminal:
 
 1. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
-   - Press "Enter" when prompted for the file to save the key in, take note of the default file.
+   - Press "Enter" when prompted for the file to save the key in, take note of the default file location.
 2. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository to local machine.
 2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. In the file called "mains.tf", replace the public_key file location to the file that your key pair you generated in Step 3.1 is stored in:
+3. Run the command `nano main.tf` to edit the "mains.tf" file. Change the <your_file_location> value with path to your public key that was saved in Step 3.1:
    ```bash
    resource "aws_key_pair" "minecraft_key" {
    key_name   = "minecraft-key"
@@ -114,7 +115,7 @@ On your local terminal:
 
 1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
 2. Run the command `cd ansible` to access the required Ansible files.
-3. In the file titled "inventory.ini", change the <public_ip> value to the IP address you copied down in Step 4.1.
+3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change the <public_ip> value to the IP address you copied down in Step 4.1.
 4. Run the following command to run the playbook with the required specifications:
    ```bash
    ansible-playbook -i inventory.ini playbook.yml

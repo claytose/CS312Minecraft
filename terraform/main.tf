@@ -4,6 +4,7 @@ provider "aws" {
 
 resource "aws_key_pair" "minecraft_key" {
   key_name   = "minecraft-key"
+  # TODO: Replace the <your_file_location> with path to public key (ex: /home/claytose/.ssh/id_rsa.pub)
   public_key = file("<your_file_location>")
 }
 
