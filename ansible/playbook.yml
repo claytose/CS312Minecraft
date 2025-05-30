@@ -52,7 +52,7 @@
 
           [Install]
           WantedBy=multi-user.target
-      mode: '0644'
+        mode: '0644'
 
     - name: Enable and start the Minecraft service
       systemd:
