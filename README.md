@@ -131,7 +131,7 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 3. Set Envrionment Variables
+## 3. Set Environment Variables
 
 1. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
    ```bash
