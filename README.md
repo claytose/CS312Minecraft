@@ -50,16 +50,9 @@ Diagram of Major Steps
              |
              v
 +---------------------------+
-| 3. Run Terraform          |
-| - Create EC2 instance     |
-| - Create key & security   |
-+------------+-------------+
-             |
-             v
-+---------------------------+
-| 4. Run Ansible Playbook   |
-| - Download MC server      |
-| - Configure service       |
+| 3. Run Deployment Script  |
+| - Enable permissions      |
+| - Run SCript              |
 +------------+-------------+
              |
              v
@@ -150,20 +143,16 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 4. Clone GitHub Repository and Create Public Key
+## 4. Clone GitHub Repository
 
 1. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository.
-2. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
-   - Replace the `<your_email>` variable with your own email.
-   - Click `Enter` when prompted for the file location to save the key in, take note of the file location for the next step.
-   - Click `Enter` when prompted for a passphrase.
 
 ---
 
 ## 5. Change permissions for Deployment Script
 
 1. Run the command `cd CS312Minecraft` to navigate to the repository directory.
-2. Run the command `chmod +x deploy.sh` to allow script to execute
+2. Run the command `chmod +x deploy.sh` to give the script permission to execute.
 
 ---
 
@@ -176,13 +165,15 @@ NOTE: Commands for required dependencies may need to be put in line by line.
       - Capture the EC2 public IP
       - Update the inventory.ini file
       - Run the Ansible playbook to configure the server
-2. Take note of the public IP address that corresponds to recently configured server.
+2. Type `yes` when prompted to connect to the instance.
+3. Take note of the public IP address that corresponds to recently configured server.
+   - Should be a line that is printed that states `Public IP is: <public_ip>`.
 
 ---
 
 ## 7. Verify Server is Running through nmap
 
-1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 6.2 to verify the server is up and running:
+1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the instance's IP address from Step 6.3 to verify the server is up and running:
    ```bash
    nmap -sV -Pn -p T:25565 <public-ip>
    ```

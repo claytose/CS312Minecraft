@@ -14,10 +14,10 @@ if [ ! -f "$KEY_PATH" ]; then
   echo "Generating SSH key..."
   ssh-keygen -t rsa -b 4096 -C "$COMMENT" -f "$KEY_PATH" -N ""
 else
-  echo "SSH key already exists at $KEY_PATH"
+  echo "SSH key already exists at $KEY_PATH, using this key for initialization"
 fi
 
-# Navigate to terraform directory
+# Navigate to the terraform directory
 cd "$(dirname "$0")/terraform" || exit 1
 
 # Run Terraform
@@ -25,7 +25,7 @@ echo "Running Terraform."
 terraform init
 terraform apply -auto-approve -var="public_key_path=${PUB_KEY_PATH}"
 
-# Extract public IP and update inventory
+# Extract public IP
 PUBLIC_IP=$(terraform output -raw public_ip)
 echo "Public IP is: $PUBLIC_IP"
 
@@ -34,7 +34,6 @@ echo "Updating Ansible inventory."
 echo "[minecraft]" > "$INVENTORY_FILE"
 echo "$PUBLIC_IP ansible_user=ec2-user ansible_ssh_private_key_file=$KEY_PATH" >> "$INVENTORY_FILE"
 
-
-# Run playbook
-echo "Running Ansible playbook.
+# Run Ansible playbook
+echo "Running Ansible playbook."
 ansible-playbook -i "$INVENTORY_FILE" ../ansible/playbook.yml
