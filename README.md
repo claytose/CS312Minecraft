@@ -59,7 +59,7 @@ Diagram of Major Steps
              |
              v
 +---------------------------+
-| 5. Verify Server Running  |
+| 4. Verify Server Running  |
 | - Use nmap or Minecraft   |
 |   client to connect       |
 +---------------------------+
@@ -125,7 +125,7 @@ NOTE: Commands for required dependencies may need to be put in line by line.
    sudo apt install netcat-openbsd
    dpkg -l netcat-openbsd
    ```
-   
+
 ---
 
 ## 2. Record AWS Credentials

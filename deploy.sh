@@ -32,7 +32,6 @@ echo "Public IP is: $PUBLIC_IP"
 # Wait for EC2 instance to be SSH-accessible
 echo "Waiting for SSH to become available on $PUBLIC_IP..."
 while ! nc -z -w5 $PUBLIC_IP 22; do
-  echo "Still waiting for SSH..."
   sleep 5
 done
 
