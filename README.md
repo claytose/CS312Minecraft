@@ -179,7 +179,7 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 7. Verify Server is Running through nmap
+## 7. Verify Server is Running Through nmap
 
 1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the instance's IP address from Step 6.3 to verify the server is up and running:
    ```bash
