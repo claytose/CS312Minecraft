@@ -24,6 +24,7 @@ Requirements
       - Ansible core version 2.16.3
       - git version 2.43.0 
       - nmap version 7.94
+      - UnZip version 6.0
    - User must configure AWS credentials, the Ansible Inventory file with the correct IP address, and the Terraform Configuration file to point to the correct path of their public key.
    - Local machine or VM must have Internet access.
    - AWS credentials and CLI are required.
@@ -73,6 +74,8 @@ Steps
 
 ## 1. Install Required Dependencies on Local Machine or VM
 
+NOTE: Commands for required dependencies may need to be put in line by line.
+
 1. Open up a terminal or command line of your choice with administrator privileges on your local machine or VM.
 2. Install Terraform:
    - Paste the following into the terminal with to install Terraform and verify download:
@@ -84,7 +87,13 @@ Steps
    sudo apt update && sudo apt install terraform -y
    terraform -v
    ```
-3. Install AWS CLI:
+3. Install UnZip:
+   - Paste the following into the terminal to install UnZip and verify download:
+   ```bash
+   sudo apt install unzip
+   unzip --version
+   ```
+4. Install AWS CLI:
    - Paste the following into the terminal to install AWS CLI and verify download:
    ```bash
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -117,7 +126,7 @@ Steps
 
 ---
 
-## 2. Configure AWS Credentials
+## 2. Record AWS Credentials
 
 1. Login to AWS Academy (https://awsacademy.instructure.com/login/canvas)
 2. Launch the AWS Learner Academy Lab.
@@ -125,10 +134,6 @@ Steps
 4. Click `AWS Details`
 5. Click `Show` on the AWS CLI details.
 6. Record the AWS Access Key ID, AWS Secret key, and the AWS Session Token.
-7. Type `aws configure` into the terminal.
-   - Fill out the `AWS Access Key ID` and `AWS Secret Access Key` fields with keys recorded from AWS Academy.
-   - Type `us-west-2` for `Default region name` to set it to Oregon.
-   - Click `Enter` when prompted for the for the default output format.
 
 ---
 

@@ -2,10 +2,14 @@ provider "aws" {
   region = "us-west-2"
 }
 
+variable "public_key_path" {
+  description = "Path to the public SSH key"
+  type        = string
+}
+
 resource "aws_key_pair" "minecraft_key" {
   key_name   = "minecraft-key"
-  # TODO: Replace the <your_file_location> with path to public key (ex: /home/claytose/.ssh/id_rsa.pub)
-  public_key = file("<your_file_location>")
+  public_key = file(var.public_key_path)
 }
 
 resource "aws_security_group" "minecraft_sg" {
@@ -34,13 +38,16 @@ resource "aws_security_group" "minecraft_sg" {
 }
 
 resource "aws_instance" "minecraft_ec2" {
-  ami           = "ami-04999cd8f2624f834" # Amazon Linux 2023
+  ami           = "ami-04999cd8f2624f834"  # Amazon Linux 2023 (update if needed)
   instance_type = "t2.medium"
   key_name      = aws_key_pair.minecraft_key.key_name
-
   vpc_security_group_ids = [aws_security_group.minecraft_sg.id]
 
   tags = {
     Name = "MinecraftServer"
   }
+}
+
+output "public_ip" {
+  value = aws_instance.minecraft_ec2.public_ip
 }
