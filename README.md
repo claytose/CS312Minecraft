@@ -120,7 +120,7 @@ Steps
 ## 2. Configure AWS Credentials
 
 1. Login to AWS Academy (https://awsacademy.instructure.com/login/canvas)
-2. Launch the AWS Learner Academy Lab
+2. Launch the AWS Learner Academy Lab.
 3. Click `Start Lab`
 4. Click `AWS Details`
 5. Click `Show` on the AWS CLI details.
