@@ -94,7 +94,8 @@ On your local terminal:
    - Press Enter when prompted for a passphrase.
 2. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository to local machine.
 2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. Run the command `nano main.tf` to edit the "mains.tf" file. Change the `<your_file_location>` value with path to your public key that was saved in Step 3.1:
+3. Run the command `nano main.tf` to edit the "mains.tf" file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 3.1:
+   - Note: May need to add `.pub` to the end of the path copied from Step 3.1 to ensure the public key is being accessed.
    ```bash
    resource "aws_key_pair" "minecraft_key" {
    key_name   = "minecraft-key"
@@ -117,7 +118,7 @@ On your local terminal:
 
 1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
 2. Run the command `cd ansible` to access the required Ansible files.
-3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change the `<public_ip>` value to the IP address you copied down in Step 4.1.
+3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change and save the `<public_ip>` value to the IP address you copied down in Step 4.1.
 4. Run the following command to run the playbook with the required specifications:
    ```bash
    ansible-playbook -i inventory.ini playbook.yml
@@ -133,8 +134,8 @@ On your local terminal:
    ```
 2. The output should look something like this:
    - PORT      STATE SERVICE   VERSION
-     25565/tcp open  minecraft Minecraft 1.21.5
-
+   - 25565/tcp open  minecraft Minecraft 1.21.5
+3. If so, your Minecraft server is up and running!
 ---
 
 ## 8. (Optional) Verify that Server is Running Through Minecraft Client
