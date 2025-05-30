@@ -14,7 +14,7 @@ Required Dependenices:
    - AWS CLI version 2.27.25
    - Ansible core version 2.16.3
    - git version 2.43.0 
-   - nmap version 
+   - nmap version 7.94
 
 1. Open up a terminal or command line of your choice with administrator privileges on your local machine or VM.
 2. Install Terraform:
@@ -51,13 +51,12 @@ Required Dependenices:
    git --version
    ```
 6. Install nmap:
-   - Paste the following into the terminal with administrator privileges to install nmap and verify download:
+   - Paste the following into the terminal to install nmap and verify download:
    ```bash
    sudo apt update
    sudo apt install nmap -y
    nmap --version
    ```
-
 
 ---
 
@@ -73,7 +72,12 @@ Required Dependenices:
    - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
    - Type "us-west-2" for "Default region name" to set it to Oregon.
    - Click "Enter" for "Default output format."
-8. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
+
+---
+
+## 3. Set Envrionment Variables
+
+1. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
       - Need to replace each of the fields with your AWS information saved from Step 2.6.
    ```bash
    export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID HERE>
@@ -81,21 +85,25 @@ Required Dependenices:
    export AWS_SESSION_TOKEN=<YOUR_SESSION_TOKEN_HERE>
    ```
 
-   
 ---
 
-## 3. Create Terraform Files
+## 4. Clone GitHub Repository and Create Public Key
+
+1. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository.
+2. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
+   - Replace the `<your_email>` variable with your own email.
+   - Click "Enter" when prompted for the file to save the key in, take note of the default file location for the next step.
+   - Click "Enter" when prompted for a passphrase.
+
+---
+
+## 5. Create and Run Terraform Files
 
 On your local terminal:
 
-1. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
-   - Replace the `<your_email>` variable with your own email.
-   - Press Enter when prompted for the file to save the key in, take note of the default file location.
-   - Press Enter when prompted for a passphrase.
-2. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository to local machine.
 2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. Run the command `nano main.tf` to edit the "mains.tf" file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 3.1:
-   - Note: May need to add `.pub` to the end of the path copied from Step 3.1 to ensure the public key is being accessed.
+3. Run the command `nano main.tf` to edit the "mains.tf" file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 4.2:
+   - Note: May need to add `.pub` to the end of the path copied from Step 4.2 to ensure the public key is being accessed.
    ```bash
    resource "aws_key_pair" "minecraft_key" {
    key_name   = "minecraft-key"
@@ -105,30 +113,35 @@ On your local terminal:
 3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
 4. Run the command `terraform apply` to apply these changes.
    - Type `yes` when prompted to apply changes.
+
 ---
 
-## 4. Record Public IP Address
+## 6. Record Public IP Address
 
 1. Run: `terraform output public_ip` to check the public IP address of the previously created Minecraft server.
    - Record this public IP address to use in the next step.
 
 ---
 
-## 5. Create and Run Ansible Files
+## 7. Create and Run Ansible Files
 
 1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
 2. Run the command `cd ansible` to access the required Ansible files.
-3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change and save the `<public_ip>` value to the IP address you copied down in Step 4.1.
+3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change and save the `<public_ip>` value in the following section to the IP address you copied down in Step 6.1:
+   ```bash
+   <public_ip> ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/id_rsa
+   ```
 4. Run the following command to run the playbook with the required specifications:
    ```bash
    ansible-playbook -i inventory.ini playbook.yml
    ```
 5. Type `yes` to continue.
+
 ---
 
-## 7. Verify Server is Running through nmap
+## 8. Verify Server is Running through nmap
 
-1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 4.1 to verify the server is up and running:
+1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 6.1 to verify the server is up and running:
    ```bash
    nmap -sV -Pn -p T:25565 <public-ip>
    ```
@@ -138,7 +151,7 @@ On your local terminal:
 3. If so, your Minecraft server is up and running!
 ---
 
-## 8. (Optional) Verify that Server is Running Through Minecraft Client
+## 9. (Optional) Verify that Server is Running Through Minecraft Client
 1. Launch the Minecraft client.
 2. Click `Multiplayer`, and then `Direct Connection`.
 3. Enter the instance's public IP address into the `Server Address` field.
