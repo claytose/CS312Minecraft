@@ -65,7 +65,7 @@ Required Dependenices:
    - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
    - Type "us-east-1" for "Default region name".
    - Click "Enter" for "Default output format."
-8. Save the AWS information as variables to be used in the scripts later using:
+8. Save the AWS information as variables in the terminal to be used in the scripts later using:
    ```bash
    export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID HERE
    export AWS_SECRET_ACCESS_KEY=YOUR SECRET_ACCESS_KEY HERE
@@ -96,10 +96,10 @@ On your local terminal:
    - Type `yes` when prompted to apply changes.
 ---
 
-## 4. Install Java
+## 4. Record Public IP Address
 
-1. Run: `sudo yum update -y` to check for updates.
-2. Run: `sudo dnf install java-21-amazon-corretto -y` to install Java (https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/what-is-corretto-21.html).
+1. Run: `18.212.189.37` to check the public IP address of the previously created Minecraft server.
+   - Record this public IP address for later.
 
 ---
 
