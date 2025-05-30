@@ -64,26 +64,26 @@ Required Dependenices:
 
 1. Login to AWS Academy (https://awsacademy.instructure.com/login/canvas)
 2. Launch the AWS Learner Academy Lab
-3. Click "Start Lab"
-4. Click "AWS Details"
-5. Click "Show" on the AWS CLI details.
+3. Click `Start Lab`
+4. Click `AWS Details`
+5. Click `Show` on the AWS CLI details.
 6. Record the AWS Access Key ID, AWS Secret key, and the AWS Session Token.
 7. Type `aws configure` into the terminal.
-   - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
-   - Type "us-west-2" for "Default region name" to set it to Oregon.
-   - Click "Enter" for "Default output format."
+   - Fill out the `AWS Access Key ID` and `AWS Secret Access Key` fields with keys recorded from AWS Academy.
+   - Type `us-west-2` for `Default region name` to set it to Oregon.
+   - Click `Enter` when prompted for the for the default output format.
 
 ---
 
 ## 3. Set Envrionment Variables
 
 1. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
-      - Need to replace each of the fields with your AWS information saved from Step 2.6.
    ```bash
    export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID HERE>
    export AWS_SECRET_ACCESS_KEY=<YOUR SECRET_ACCESS_KEY HERE>
    export AWS_SESSION_TOKEN=<YOUR_SESSION_TOKEN_HERE>
    ```
+   - Need to replace each of the fields with your AWS information saved from Step 2.6.
 
 ---
 
@@ -92,8 +92,8 @@ Required Dependenices:
 1. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository.
 2. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
    - Replace the `<your_email>` variable with your own email.
-   - Click "Enter" when prompted for the file to save the key in, take note of the default file location for the next step.
-   - Click "Enter" when prompted for a passphrase.
+   - Click `Enter` when prompted for the file location to save the key in, take note of the file location for the next step.
+   - Click `Enter` when prompted for a passphrase.
 
 ---
 
@@ -102,14 +102,14 @@ Required Dependenices:
 On your local terminal:
 
 2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. Run the command `nano main.tf` to edit the "mains.tf" file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 4.2:
-   - Note: May need to add `.pub` to the end of the path copied from Step 4.2 to ensure the public key is being accessed.
+3. Run the command `nano main.tf` to edit the `mains.tf` file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 4.2:
    ```bash
    resource "aws_key_pair" "minecraft_key" {
    key_name   = "minecraft-key"
    public_key = file("<your_file_location>")
    }
    ```
+   - Note: May need to add `.pub` to the end of the path copied from Step 4.2 to ensure the public key is being accessed.
 3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
 4. Run the command `terraform apply` to apply these changes.
    - Type `yes` when prompted to apply changes.
@@ -127,7 +127,7 @@ On your local terminal:
 
 1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
 2. Run the command `cd ansible` to access the required Ansible files.
-3. Run the command `nano inventory.ini` to edit the "inventory.ini" file. Change and save the `<public_ip>` value in the following section to the IP address you copied down in Step 6.1:
+3. Run the command `nano inventory.ini` to edit the `inventory.ini` file. Change and save the `<public_ip>` value in the following section to the IP address you copied down in Step 6.1:
    ```bash
    <public_ip> ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/id_rsa
    ```
