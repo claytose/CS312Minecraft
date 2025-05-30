@@ -25,11 +25,13 @@ Requirements
       - git version 2.43.0 
       - nmap version 7.94
       - UnZip version 6.0
-   - User must configure AWS credentials, the Ansible Inventory file with the correct IP address, and the Terraform Configuration file to point to the correct path of their public key.
+      - netcat version 1.226-1ubuntu2
+   - User must configure AWS credential.
    - Local machine or VM must have Internet access.
    - AWS credentials and CLI are required.
    - The user will set environment variables as defined in Step 3.
    - The user will need to make or have a public key.
+   - The user will need to have the ability to change file permissions.
 
 
 Diagram of Major Steps
@@ -117,7 +119,13 @@ NOTE: Commands for required dependencies may need to be put in line by line.
    sudo apt install nmap -y
    nmap --version
    ```
-
+7. Install netcat:
+   - Paste the following into the terminal to install netcat and verify download:
+   ```bash
+   sudo apt install netcat-openbsd
+   dpkg -l netcat-openbsd
+   ```
+   
 ---
 
 ## 2. Record AWS Credentials
