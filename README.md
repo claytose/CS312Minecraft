@@ -8,13 +8,17 @@
 
 ---
 
-## 1. Install Required Dependencies on Local Machine or VM
 Required Dependenices:
    - Terraform v1.12.1
    - AWS CLI version 2.27.25
    - Ansible core version 2.16.3
    - git version 2.43.0 
    - nmap version 7.94
+
+Steps
+===================
+
+## 1. Install Required Dependencies on Local Machine or VM
 
 1. Open up a terminal or command line of your choice with administrator privileges on your local machine or VM.
 2. Install Terraform:
@@ -159,4 +163,13 @@ On your local terminal:
 5. Play on the new server!
 
 
-
+## Resources:
+   - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html
+   - https://phoenixnap.com/kb/how-to-install-use-nmap-scanning-linux
+   - https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+   - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+   - https://git-scm.com/downloads
+   - https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/what-is-corretto-21.html
+   - https://www.minecraft.net/en-us/download/server
+   - https://docs.github.com/en/get-started/writing-on-github
+   - https://medium.com/@antoinecichowicz/minecraft-server-on-aws-ecs-fargate-using-terraform-6626932a75c5
