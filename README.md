@@ -164,7 +164,7 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 6. Run Deploy Script
+## 6. Run Deployment Script
 
 1. Run the deployment script:
    - `./deploy.sh`
