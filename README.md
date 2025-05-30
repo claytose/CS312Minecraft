@@ -9,7 +9,7 @@
 ---
 
 ## 1. Install Required Dependencies on Local Machine or VM
-- Required Dependenices:
+Required Dependenices:
    - Terraform v1.12.1
    - AWS CLI version 2.27.25
    - Ansible core version 2.16.3
@@ -63,8 +63,8 @@
 6. Record the AWS Access Key and the AWS Secret key.
 7. Type `aws configure` into the terminal.
    - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
-   - Type "us-west-2" for "Default region name" for Oregon
-   - Click "Enter" for "Default output format"
+   - Type "us-west-2" for "Default region name" to set default location to Oregon.
+   - Click "Enter" for "Default output format."
 
    
 ---
@@ -73,11 +73,20 @@
 
 On your local terminal:
 
-1. Run the command: `ssh -i <path> ec2-user@<IP address>`.
-   - Replace path with path to your key created in step 1.4 and replace IP address with IP address of your instance.
-   - For instance, `ssh -i ~/mine-key.pem ec2-user@54.227.27.149`.
-2. Type `yes` to continue connecting.
-
+1. Run the command `ssh-keygen -t rsa -b 4096 -C "claytose@oregonstate.edu"` to generate a public SSH key pair.
+   - Replace "claytose@oregonstate.edu" with your own email.
+   - Press "Enter" when prompted for the file to save the key in, take note of the default file.
+2. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository to local machine.
+2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
+3. In the file called "mains.tf", replace the public_key value to the file that your key pair you generated in Step 1 is stored in:
+   ```bash
+   resource "aws_key_pair" "minecraft_key" {
+   key_name   = "minecraft-key"
+   public_key = file("/home/claytose/.ssh/id_rsa")
+   }
+   ```
+3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
+4. Run the command `terraform apply` to apply these changes.
 ---
 
 ## 4. Install Java

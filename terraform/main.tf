@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "us-east-1"
 }
 
 resource "aws_key_pair" "minecraft_key" {
   key_name   = "minecraft-key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file("/home/claytose/.ssh/id_rsa")
 }
 
 resource "aws_security_group" "minecraft_sg" {
