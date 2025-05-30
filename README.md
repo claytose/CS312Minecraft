@@ -160,51 +160,29 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 5. Create and Run Terraform Files
+## 5. Change permissions for Deployment Script
 
-On your local terminal:
-
-2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. Run the command `nano main.tf` to edit the `mains.tf` file. Change and save the `<your_file_location>` value in the section below with the path to your public key that was saved in Step 4.2:
-   ```bash
-   resource "aws_key_pair" "minecraft_key" {
-   key_name   = "minecraft-key"
-   public_key = file("<your_file_location>")
-   }
-   ```
-   - Note: May need to add `.pub` to the end of the path copied from Step 4.2 to ensure the public key is being accessed.
-3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
-4. Run the command `terraform apply` to apply these changes.
-   - Type `yes` when prompted to apply changes.
+1. Run the command `cd CS312Minecraft` to navigate to the repository directory.
+2. Run the command `chmod +x deploy.sh` to allow script to execute
 
 ---
 
-## 6. Record Public IP Address
+## 6. Run Deploy Script
 
-1. Run: `terraform output public_ip` to check the public IP address of the previously created Minecraft server.
-   - Record this public IP address to use in the next step.
-
----
-
-## 7. Create and Run Ansible Files
-
-1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
-2. Run the command `cd ansible` to access the required Ansible files.
-3. Run the command `nano inventory.ini` to edit the `inventory.ini` file. Change and save the `<public_ip>` value in the following section to the IP address you copied down in Step 6.1:
-   ```bash
-   <public_ip> ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/id_rsa
-   ```
-4. Run the following command to run the playbook with the required specifications:
-   ```bash
-   ansible-playbook -i inventory.ini playbook.yml
-   ```
-5. Type `yes` to continue.
+1. Run the deployment script:
+   - `./deploy.sh`
+   - This will:
+      - Run Terraform to provision infrastructure
+      - Capture the EC2 public IP
+      - Update the inventory.ini file
+      - Run the Ansible playbook to configure the server
+2. Take note of the public IP address that corresponds to recently configured server.
 
 ---
 
-## 8. Verify Server is Running through nmap
+## 7. Verify Server is Running through nmap
 
-1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 6.1 to verify the server is up and running:
+1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 6.2 to verify the server is up and running:
    ```bash
    nmap -sV -Pn -p T:25565 <public-ip>
    ```
@@ -214,7 +192,7 @@ On your local terminal:
 3. If so, your Minecraft server is up and running!
 ---
 
-## 9. (Optional) Verify that Server is Running Through Minecraft Client
+## 8. (Optional) Verify that Server is Running Through Minecraft Client
 1. Launch the Minecraft client.
 2. Click `Multiplayer`, and then `Direct Connection`.
 3. Enter the instance's public IP address into the `Server Address` field.
