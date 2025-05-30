@@ -29,6 +29,7 @@ Requirements
    - Local machine or VM must have Internet access.
    - AWS credentials and CLI are required.
    - The user will set environment variables as defined in Step 3.
+   - The user will need to make or have a public key.
 
 
 Diagram of Major Steps

@@ -21,7 +21,7 @@ fi
 cd "$(dirname "$0")/terraform" || exit 1
 
 # Run Terraform
-echo "Running Terraform..."
+echo "Running Terraform."
 terraform init
 terraform apply -auto-approve -var="public_key_path=${PUB_KEY_PATH}"
 
@@ -30,10 +30,11 @@ PUBLIC_IP=$(terraform output -raw public_ip)
 echo "Public IP is: $PUBLIC_IP"
 
 # Update Ansible inventory
-echo "Updating Ansible inventory..."
+echo "Updating Ansible inventory."
 echo "[minecraft]" > "$INVENTORY_FILE"
 echo "$PUBLIC_IP ansible_user=ec2-user ansible_ssh_private_key_file=$KEY_PATH" >> "$INVENTORY_FILE"
 
-echo "Inventory updated at $INVENTORY_FILE"
 
-ansible-playbook -i inventory.ini playbook.yml
+# Run playbook
+echo "Running Ansible playbook.
+ansible-playbook -i "$INVENTORY_FILE" ../ansible/playbook.yml
