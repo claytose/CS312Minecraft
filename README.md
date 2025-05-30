@@ -60,11 +60,17 @@ Required Dependenices:
 3. Click "Start Lab"
 4. Click "AWS Details"
 5. Click "Show" on the AWS CLI details.
-6. Record the AWS Access Key and the AWS Secret key.
+6. Record the AWS Access Key ID, AWS Secret key, and the AWS Session Token.
 7. Type `aws configure` into the terminal.
    - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
-   - Type "us-west-2" for "Default region name" to set default location to Oregon.
+   - Type "us-east-1" for "Default region name".
    - Click "Enter" for "Default output format."
+8. Save the AWS information as variables to be used in the scripts later using:
+   ```bash
+   export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID HERE
+   export AWS_SECRET_ACCESS_KEY=YOUR SECRET_ACCESS_KEY HERE
+   export AWS_SESSION_TOKEN=YOUR_SESSION_TOKEN_HERE
+   ```
 
    
 ---
@@ -87,6 +93,7 @@ On your local terminal:
    ```
 3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
 4. Run the command `terraform apply` to apply these changes.
+   - Type `yes` when prompted to apply changes.
 ---
 
 ## 4. Install Java

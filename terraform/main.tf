@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_key_pair" "minecraft_key" {
   key_name   = "minecraft-key"
-  public_key = file("/home/claytose/.ssh/id_rsa")
+  public_key = file("/home/claytose/.ssh/id_rsa.pub")
 }
 
 resource "aws_security_group" "minecraft_sg" {
