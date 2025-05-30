@@ -14,9 +14,11 @@ Required Dependenices:
    - AWS CLI version 2.27.25
    - Ansible core version 2.16.3
    - git version 2.43.0 
+   - nmap version 
 
-1. Install Terraform:
-   - Paste the following into the terminal with administrator privileges to install Terraform and verify download:
+1. Open up a terminal or command line of your choice with administrator privileges on your local machine or VM.
+2. Install Terraform:
+   - Paste the following into the terminal with to install Terraform and verify download:
    ```bash
    sudo apt update && sudo apt install -y gnupg software-properties-common curl
    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -25,30 +27,36 @@ Required Dependenices:
    sudo apt update && sudo apt install terraform -y
    terraform -v
    ```
-2. Install AWS CLI:
-   - Paste the following into the terminal with administrator privileges to install AWS CLI and verify download:
+3. Install AWS CLI:
+   - Paste the following into the terminal to install AWS CLI and verify download:
    ```bash
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
    unzip awscliv2.zip
    sudo ./aws/install
    aws --version
    ```
-3. Install Ansible:
-   - Paste the following into the terminal with administrator privileges to install Ansible and verify download:
+4. Install Ansible:
+   - Paste the following into the terminal to install Ansible and verify download:
    ```bash
    sudo apt install software-properties-common -y
    sudo add-apt-repository --yes --update ppa:ansible/ansible
    sudo apt install ansible -y
    ansible --version
    ```
-4. Install Git:
-   - Paste the following into the terminal with administrator privileges to install Git and verify download:
+5. Install git:
+   - Paste the following into the terminal to install git and verify download:
    ```bash
    sudo apt update
    sudo apt install git -y
    git --version
    ```
-
+6. Install nmap:
+   - Paste the following into the terminal with administrator privileges to install nmap and verify download:
+   ```bash
+   sudo apt update
+   sudo apt install nmap -y
+   nmap --version
+   ```
 
 
 ---
@@ -65,11 +73,11 @@ Required Dependenices:
    - Fill out "AWS Access Key ID" and "AWS Secret Access Key" with keys recorded from AWS Academy.
    - Type "us-east-1" for "Default region name".
    - Click "Enter" for "Default output format."
-8. Save the AWS information as variables in the terminal to be used in the scripts later using:
+8. Save the AWS information as environment variables in the terminal to be used in the scripts later using:
    ```bash
-   export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID HERE
-   export AWS_SECRET_ACCESS_KEY=YOUR SECRET_ACCESS_KEY HERE
-   export AWS_SESSION_TOKEN=YOUR_SESSION_TOKEN_HERE
+   export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID HERE>
+   export AWS_SECRET_ACCESS_KEY=<YOUR SECRET_ACCESS_KEY HERE>
+   export AWS_SESSION_TOKEN=<YOUR_SESSION_TOKEN_HERE>
    ```
 
    
@@ -79,16 +87,15 @@ Required Dependenices:
 
 On your local terminal:
 
-1. Run the command `ssh-keygen -t rsa -b 4096 -C "claytose@oregonstate.edu"` to generate a public SSH key pair.
-   - Replace "claytose@oregonstate.edu" with your own email.
+1. Run the command `ssh-keygen -t rsa -b 4096 -C "<your_email>"` to generate a public SSH key pair.
    - Press "Enter" when prompted for the file to save the key in, take note of the default file.
 2. Run the command `git clone https://github.com/claytose/CS312Minecraft.git` to clone this repository to local machine.
 2. Run the command `cd CS312Minecraft` and then `cd terraform` to navigate to the terraform directory.
-3. In the file called "mains.tf", replace the public_key value to the file that your key pair you generated in Step 1 is stored in:
+3. In the file called "mains.tf", replace the public_key file location to the file that your key pair you generated in Step 3.1 is stored in:
    ```bash
    resource "aws_key_pair" "minecraft_key" {
    key_name   = "minecraft-key"
-   public_key = file("/home/claytose/.ssh/id_rsa")
+   public_key = file("<your_file_location>")
    }
    ```
 3. Run the command `terraform init` to set up terraform files using the terraform scripts from the repository.
@@ -98,86 +105,36 @@ On your local terminal:
 
 ## 4. Record Public IP Address
 
-1. Run: `18.212.189.37` to check the public IP address of the previously created Minecraft server.
-   - Record this public IP address for later.
+1. Run: `terraform output public_ip` to check the public IP address of the previously created Minecraft server.
+   - Record this public IP address to use in the next step.
 
 ---
 
-## 5. Install Minecraft Server
+## 5. Create and Run Ansible Files
 
-1. Create directory for minecraft server, run:
-   - `mkdir minecraft`
-   - `cd minecraft`
-2. Download Minecraft server JAR (from https://www.minecraft.net/en-us/download/server) to instance by running:
-   - `curl -O https://launcher.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar`
-3. Accept EULA:
-   - Run: `echo "eula=true" > eula.txt`
-
----
-
-## 6. Configure and Start Server
-
-1. Create script file to launch from later
-   - Run `nano start.sh`
-
-2. Paste the following into the new file:
-
+1. Run the command `cd ..` to go back to the parent directory (CS312Minecraft).
+2. Run the command `cd ansible` to access the required Ansible files.
+3. In the file titled "inventory.ini", change the <public_ip> value to the IP address you copied down in Step 4.1.
+4. Run the following command to run the playbook with the required specifications:
    ```bash
-   #!/bin/bash
-   java -Xmx1024M -Xms1024M -jar server.jar nogui
+   ansible-playbook -i inventory.ini playbook.yml
    ```
-
-3. Next, need to make the script executable by running:
-   - `chmod +x start.sh`
-   - `./start.sh`
-
-4. A message should be displayed on terminal confirming that server is running.
-
+5. Type `yes` to continue.
 ---
 
-## 7. Setup Autostart
+## 7. Verify Server is Running through nmap
 
-1. Open a new terminal and SSH into EC2 instance again (Step 3).
-2. Type `cd minecraft` to navigate back to the Minecraft file.
-3. Create a service file:
-   - Run: `sudo nano /etc/systemd/system/minecraft.service`
-
-4. Paste this into the file, and change path names if necessary:
-
-   ```ini
-   [Unit]
-   Description=Minecraft Server
-   After=network.target
-
-   [Service]
-   User=ec2-user
-   WorkingDirectory=/home/ec2-user/minecraft
-   ExecStart=/usr/bin/java -Xmx1024M -Xms1024M -jar server.jar nogui
-   Restart=on-failure
-
-   [Install]
-   WantedBy=multi-user.target
-   ```
-
-5. Enable and start the service file by running each of these commands:
-
+1. After Ansible finishes running the playbook, the Minecraft server should be set up. Run the following command with the IP address from Step 4.1 to verify the server is up and running:
    ```bash
-   sudo systemctl daemon-reexec
-   sudo systemctl daemon-reload
-   sudo systemctl enable minecraft
-   sudo systemctl start minecraft
+   nmap -sV -Pn -p T:25565 <public-ip>
    ```
-
-6. Verify that everything was set up correctly by running `sudo systemctl status minecraft`.
-   - Should see that server is not running.
-7. Reboot system by running `sudo reboot`.
-8. Reconnect via SSH back into EC2 instance after it has rebooted.
-9. Verify that server is now running by running `sudo systemctl status minecraft` again.
-   - Should see that server is now active.
+2. The output should look something like this:
+   - PORT      STATE SERVICE   VERSION
+     25565/tcp open  minecraft Minecraft 1.21.5
 
 ---
 
-## 8. Verify that Server is Running Through Minecraft Client
+## 8. (Optional) Verify that Server is Running Through Minecraft Client
 1. Launch the Minecraft client.
 2. Click `Multiplayer`, and then `Direct Connection`.
 3. Enter the instance's public IP address into the `Server Address` field.
