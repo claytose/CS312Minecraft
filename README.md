@@ -8,12 +8,65 @@
 
 ---
 
-Required Dependenices:
-   - Terraform v1.12.1
-   - AWS CLI version 2.27.25
-   - Ansible core version 2.16.3
-   - git version 2.43.0 
-   - nmap version 7.94
+
+Background
+===================
+
+This tutorial walks users through a step-by-step process to deploy a Minecraft server on AWS using Infrastructure as Code (IaC) tools. The goal is to teach basic system administration and automation by leveraging popular tools like Terraform, Ansible, and AWS CLI. By following the guide, users will learn how to provision cloud infrastructure, run scripts, securely connect to a virtual machine, install necessary dependencies, and configure a Minecraft server to start automatically and remain persistent across reboots. This tutorial also demonstrates practical DevOps workflows, such as using GitHub for source control and validating deployment with tools like nmap.
+
+Requirements
+===================
+   - User must be using Linux (Ubuntu) to run the specific commands used in this tutorial.
+   - Must have an active AWS Learner Academy Account to access credentials
+   - Required Dependenices:
+      - Terraform v1.12.1
+      - AWS CLI version 2.27.25
+      - Ansible core version 2.16.3
+      - git version 2.43.0 
+      - nmap version 7.94
+   - User must configure AWS credentials, the Ansible Inventory file with the correct IP address, and the Terraform Configuration file to point to the correct path of their public key.
+   - Local machine or VM must have Internet access.
+   - AWS credentials and CLI are required.
+   - The user will set environment variables as defined in Step 3.
+
+
+Diagram of Major Steps
+===================
+<pre>
++---------------------------+
+| 1. Configure Environment  |
+| - Install Terraform, CLI |
+| - Install Ansible, Git   |
++------------+-------------+
+             |
+             v
++---------------------------+
+| 2. Set Up AWS Credentials |
+| - Get temp credentials    |
+| - Set environment vars    |
++------------+-------------+
+             |
+             v
++---------------------------+
+| 3. Run Terraform          |
+| - Create EC2 instance     |
+| - Create key & security   |
++------------+-------------+
+             |
+             v
++---------------------------+
+| 4. Run Ansible Playbook   |
+| - Download MC server      |
+| - Configure service       |
++------------+-------------+
+             |
+             v
++---------------------------+
+| 5. Verify Server Running  |
+| - Use nmap or Minecraft   |
+|   client to connect       |
++---------------------------+
+</pre>
 
 Steps
 ===================
