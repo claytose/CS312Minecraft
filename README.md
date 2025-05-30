@@ -157,7 +157,7 @@ NOTE: Commands for required dependencies may need to be put in line by line.
 
 ---
 
-## 5. Change permissions for Deployment Script
+## 5. Change Permissions for Deployment Script
 
 1. Run the command `cd CS312Minecraft` to navigate to the repository directory.
 2. Run the command `chmod +x deploy.sh` to give the script permission to execute.
